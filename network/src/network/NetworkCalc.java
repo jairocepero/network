@@ -17,18 +17,11 @@ public class NetworkCalc
 
 	public static void main (String args[]) throws FileNotFoundException
 	{
-		String fileName = " ";
-		System.out.print("Enter the table  input file:");
-		Scanner cscan = new Scanner (System.in);
-
-
-		fileName = cscan.nextLine();
+		//filenames are hardcoded
+		String fileName = "tableinputfile1FIX.txt";
 		File tableInputFile = new File(fileName);
 		if (tableInputFile.exists())
 		{
-
-			System.out.println("IT LIVES!");
-
 			Scanner tInputFile = new Scanner(tableInputFile);
 			String portNumberS;
 			String address = null;
@@ -36,12 +29,9 @@ public class NetworkCalc
 			int c = 0;
 			int n = 0;
 			int portArrayCount = 0;
-			int x = 0;
 
 			while(tInputFile.hasNext() && portArrayCount != 7)
 			{
-				x++;
-				System.out.print("address" + x + "\n");
 				portArrayCount++;
 				portNumberS = tInputFile.next();
 				address= tInputFile.next();
@@ -58,7 +48,7 @@ public class NetworkCalc
 
 	//receives a CIDR(subnet) address and port number to create an array with port number
 	//the port number comes from the file as well as the CDIR(subnet)
-	public static void portNum(int portNumber, String subnet, int costNum, int portArrayCount)
+	public static void portNum(int portNumber, String subnet, int costNum, int portArrayCount) throws FileNotFoundException
 	{
 
 		SubnetUtils utils = new SubnetUtils(subnet);
@@ -68,58 +58,38 @@ public class NetworkCalc
 		if(portArrayCount == 1)
 		{
 			port1 = addresses.clone();
-			for (int i = 0; i < port1.length; i++)
-			{
-				System.out.print(port1[i] + "\n");
-			}
+			containsIp(port1, portNumber, costNum);
+			
 		}
 		else if(portArrayCount == 2)
 		{
 			port2 = addresses.clone();
-			for (int i = 0; i < port2.length; i++)
-			{
-				System.out.print(port2[i] + "\n");
-			}
+			containsIp(port2, portNumber, costNum);
 		}
 		else if(portArrayCount == 3)
 		{
 			port3 = addresses.clone();
-			for (int i = 0; i < port3.length; i++)
-			{
-				System.out.print(port3[i] + "\n");
-			}
+			containsIp(port3, portNumber, costNum);
 		}
 		else if(portArrayCount == 4)
 		{
 			port4 = addresses.clone();
-			for (int i = 0; i < port4.length; i++)
-			{
-				System.out.print(port4[i] + "\n");
-			}
+			containsIp(port4, portNumber, costNum);
 		}
 		else if(portArrayCount == 5)
 		{
 			port5 = addresses.clone();
-			for (int i = 0; i < port5.length; i++)
-			{
-				System.out.print(port5[i] + "\n");
-			}
+			containsIp(port5, portNumber, costNum);
 		}
 		else if(portArrayCount == 6)
 		{
 			port6 = addresses.clone();
-			for (int i = 0; i < port6.length; i++)
-			{
-				System.out.print(port6[i] + "\n");
-			}
+			containsIp(port6, portNumber, costNum);
 		}
 		else if(portArrayCount == 7)
 		{
 			port7 = addresses.clone();
-			for (int i = 0; i < port7.length; i++)
-			{
-				System.out.print(port7[i] + "\n");
-			}
+			containsIp(port7, portNumber, costNum);
 		}
 		else
 		{
@@ -129,9 +99,28 @@ public class NetworkCalc
 
 
 	//checks if the given ip
-	public boolean containsIp(String[] port, String address)
+	public static boolean containsIp(String[] port, int portNum, int costNum) throws FileNotFoundException
 	{
+		//filenames are hardcoded
+		String fileName = "addressinputfile1FIX.txt";
+		File addressInputFile = new File(fileName);
+		if (addressInputFile.exists())
+		{
+			Scanner tInputFile = new Scanner(addressInputFile);
 
+			while(tInputFile.hasNext())
+			{
+				String addr = tInputFile.nextLine();
+				for(String s : port)
+				{
+					if(s.compareToIgnoreCase(addr) == 0)
+					{
+						System.out.println(addr + " " + portNum);
+					}
+				}
+			}
+			
+		}
 		return true;
 	}
 }
