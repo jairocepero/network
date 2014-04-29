@@ -1,91 +1,137 @@
 package network;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class NetworkCalc
-{
-	//arrays will serve as storage for the ip range for each AS
-	//int as# will serve as storage for the AS number
-	//in cost# will serve as storage for the cost of each provided CDIR
-	public static String [] AS1; public static int as1; public static int cost1;
-	public static String [] AS2; public static int as2; public static int cost2;
-	public static String [] AS3; public static int as3; public static int cost3;
-	public static String [] AS4; public static int as4; public static int cost4;
-	public static String [] AS5; public static int as5; public static int cost5;
-	public static String [] AS6; public static int as6; public static int cost6;
-	public static String [] AS7; public static int as7; public static int cost7;
-	
-	//main
-	public static void main (String args[])
+{	
+	public static String [] port1;
+	public static String [] port2;
+	public static String [] port3;
+	public static String [] port4;
+	public static String [] port5;
+	public static String [] port6;
+	public static String [] port7;
+
+	public static void main (String args[]) throws FileNotFoundException
 	{
-		
-		File inputFile = new File ("./addressinputfile1FIX.txt");
-		
-		ASNum("200.34.55.0/24", 1);
-		for (int i = 0; i < AS1.length; i++)
+		String fileName = " ";
+		System.out.print("Enter the table  input file:");
+		Scanner cscan = new Scanner (System.in);
+
+
+		fileName = cscan.nextLine();
+		File tableInputFile = new File(fileName);
+		if (tableInputFile.exists())
 		{
-			System.out.print(AS1[i] + "\n");
+
+			System.out.println("IT LIVES!");
+
+			Scanner tInputFile = new Scanner(tableInputFile);
+			String portNumberS;
+			String address = null;
+			String costS;
+			int c = 0;
+			int n = 0;
+			int portArrayCount = 0;
+			int x = 0;
+
+			while(tInputFile.hasNext() && portArrayCount != 7)
+			{
+				x++;
+				System.out.print("address" + x + "\n");
+				portArrayCount++;
+				portNumberS = tInputFile.next();
+				address= tInputFile.next();
+				costS = tInputFile.next();
+
+				c = Integer.parseInt(costS);
+				n = Integer.parseInt(portNumberS);
+
+				portNum(n, address, c, portArrayCount);
+
+			}
 		}
-		
-		
-	}//end of main
-	
-		//receives a CIDR(subnet) address and AS number to create an array with AS number
-		//the AS number comes from the file as well as the CDIR(subnet)
-		public static void ASNum(String cidr, int ASNumber)
+	}
+
+	//receives a CIDR(subnet) address and port number to create an array with port number
+	//the port number comes from the file as well as the CDIR(subnet)
+	public static void portNum(int portNumber, String subnet, int costNum, int portArrayCount)
+	{
+
+		SubnetUtils utils = new SubnetUtils(subnet);
+		String[] addresses = utils.getInfo().getAllAddresses();
+
+
+		if(portArrayCount == 1)
 		{
-			
-			SubnetUtils utils = new SubnetUtils(cidr);
-			String[] addresses = utils.getInfo().getAllAddresses();
-			
-			if(ASNumber == 1)
+			port1 = addresses.clone();
+			for (int i = 0; i < port1.length; i++)
 			{
-				AS1 = addresses.clone();
+				System.out.print(port1[i] + "\n");
 			}
-			else if(ASNumber == 2)
-			{
-				AS2 = addresses.clone();
-			}
-			else if(ASNumber == 3)
-			{
-				AS3 = addresses.clone();
-			}
-			else if(ASNumber == 4)
-			{
-				AS4 = addresses.clone();
-			}
-			else if(ASNumber == 5)
-			{
-				AS5 = addresses.clone();
-			}
-			else if(ASNumber == 6)
-			{
-				AS6 = addresses.clone();
-			}
-			else if(ASNumber == 7)
-			{
-				AS7 = addresses.clone();
-			}
-			else
-			{
-				return;
-			}
-		}//end ASNum
-		
-		
-		//checks if the given ip is in the array containing a ip range
-		public boolean containsIp(String[] AS, String address)
+		}
+		else if(portArrayCount == 2)
 		{
-			boolean contains = false;
-			String addressToCheck = address;
-			for(String s  : AS)
+			port2 = addresses.clone();
+			for (int i = 0; i < port2.length; i++)
 			{
-				if(s.compareToIgnoreCase(addressToCheck) == 0)
-				{
-					contains = true;
-					return contains;
-				}	
+				System.out.print(port2[i] + "\n");
 			}
-			return contains;
-		}	
+		}
+		else if(portArrayCount == 3)
+		{
+			port3 = addresses.clone();
+			for (int i = 0; i < port3.length; i++)
+			{
+				System.out.print(port3[i] + "\n");
+			}
+		}
+		else if(portArrayCount == 4)
+		{
+			port4 = addresses.clone();
+			for (int i = 0; i < port4.length; i++)
+			{
+				System.out.print(port4[i] + "\n");
+			}
+		}
+		else if(portArrayCount == 5)
+		{
+			port5 = addresses.clone();
+			for (int i = 0; i < port5.length; i++)
+			{
+				System.out.print(port5[i] + "\n");
+			}
+		}
+		else if(portArrayCount == 6)
+		{
+			port6 = addresses.clone();
+			for (int i = 0; i < port6.length; i++)
+			{
+				System.out.print(port6[i] + "\n");
+			}
+		}
+		else if(portArrayCount == 7)
+		{
+			port7 = addresses.clone();
+			for (int i = 0; i < port7.length; i++)
+			{
+				System.out.print(port7[i] + "\n");
+			}
+		}
+		else
+		{
+			return;
+		}
+	}//end portNum
+
+
+	//checks if the given ip
+	public boolean containsIp(String[] port, String address)
+	{
+
+		return true;
+	}
 }
